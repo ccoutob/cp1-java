@@ -1,6 +1,8 @@
 package br.com.fiap.cp1.controller;
 
+import br.com.fiap.cp1.dto.task.CadastroTaskDto;
 import br.com.fiap.cp1.dto.task.CadastroTaskStatusDto;
+import br.com.fiap.cp1.dto.task.DetalhesTaskDto;
 import br.com.fiap.cp1.dto.task.DetalhesTaskStatusDto;
 import br.com.fiap.cp1.dto.usuario.CadastroUsuarioDto;
 import br.com.fiap.cp1.dto.usuario.DetalhesUsuarioDto;
@@ -19,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("/public")
+@RequestMapping("/tasks")
 public class TaskStatusController {
 
     @Autowired
@@ -28,20 +30,32 @@ public class TaskStatusController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("registrar")
+    //Registrar os status das tarefas (para o usuario ter acesso aos tipos dos status das tarefas)
+    @PostMapping("/public/registrar")
     @Transactional
     public ResponseEntity<DetalhesTaskStatusDto> post(@RequestBody @Valid CadastroTaskStatusDto dto,
                                                       UriComponentsBuilder builder) {
         var task = new Task(dto.tipoStatus());
         taskRepository.save(task);
-        var url = builder.path("status-task/{id}").buildAndExpand(task.getId()).toUri();
+        var url = builder.path("/status-task/{id}").buildAndExpand(task.getId()).toUri();
         return ResponseEntity.created(url).body(new DetalhesTaskStatusDto(task));
     }
 
-    @GetMapping("status")
+    //Buscar os status das tarefas "disponivel", "em andamento" etc
+    @GetMapping("/status")
     public ResponseEntity<List<DetalhesTaskStatusDto>> listar(Pageable pageable){
         var lista = taskRepository.findAll(pageable)
                 .stream().map(DetalhesTaskStatusDto::new).toList();
         return ResponseEntity.ok(lista);
+    }
+
+    @PostMapping
+    @Transactional
+    public ResponseEntity<DetalhesTaskDto> cadastrar(@RequestBody CadastroTaskDto dto,
+                                                     UriComponentsBuilder uri){
+        var task = new Task(dto.titulo(), dto.descricao(), dto.dataConclusaoPrevista(), dto.status());
+        taskRepository.save(task);
+        var url = uri.path("/task/{id}").buildAndExpand(task.getId()).toUri();
+        return ResponseEntity.created(url).body(new DetalhesTaskDto(task));
     }
 }

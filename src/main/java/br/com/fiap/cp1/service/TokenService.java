@@ -16,6 +16,19 @@ public class TokenService {
     @Value("${api.token.secret}") //Valor configurado no application.properties
     private String senha;
 
+    public String getSubject(String tokenJwt){
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(senha);
+            return JWT.require(algorithm)
+                    .withIssuer("FIAP")
+                    .build()
+                    .verify(tokenJwt)
+                    .getSubject();
+        } catch (JWTVerificationException e) {
+            throw new RuntimeException("Não foi possivel validar o token JWT");
+        }
+    }
+
     public String gerarToken(Usuario usuario) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(senha);
