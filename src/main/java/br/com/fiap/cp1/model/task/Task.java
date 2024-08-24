@@ -1,5 +1,6 @@
 package br.com.fiap.cp1.model.task;
 
+import br.com.fiap.cp1.dto.task.CadastroTaskDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,5 +44,16 @@ public class Task {
         this.descricao = descricao;
         this.dataConclusaoPrevista = dataConclusaoPrevista;
         this.status = status;
+    }
+
+    public void atualizarDados(CadastroTaskDto atualizacao){
+        if(atualizacao.titulo() != null)
+            titulo = atualizacao.titulo();
+        if(atualizacao.descricao() != null)
+            descricao = atualizacao.descricao();
+        if(atualizacao.dataConclusaoPrevista() != null)
+            dataConclusaoPrevista = atualizacao.dataConclusaoPrevista();
+        if(atualizacao.status() != null)
+            status = atualizacao.status();
     }
 }

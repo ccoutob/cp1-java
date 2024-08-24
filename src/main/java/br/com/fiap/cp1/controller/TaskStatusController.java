@@ -43,7 +43,7 @@ public class TaskStatusController {
 
     //Buscar os status das tarefas "disponivel", "em andamento" etc
     @GetMapping("/status")
-    public ResponseEntity<List<DetalhesTaskStatusDto>> listar(Pageable pageable){
+    public ResponseEntity<List<DetalhesTaskStatusDto>> listarTaskStatus(Pageable pageable){
         var lista = taskRepository.findAll(pageable)
                 .stream().map(DetalhesTaskStatusDto::new).toList();
         return ResponseEntity.ok(lista);
@@ -57,5 +57,34 @@ public class TaskStatusController {
         taskRepository.save(task);
         var url = uri.path("/task/{id}").buildAndExpand(task.getId()).toUri();
         return ResponseEntity.created(url).body(new DetalhesTaskDto(task));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<DetalhesTaskDto>> listarTasks(Pageable pageable){
+        var lista = taskRepository.findAll(pageable)
+                .stream().map(DetalhesTaskDto::new).toList();
+        return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<DetalhesTaskDto> listarTask(@PathVariable("id") Long id){
+        var task = taskRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DetalhesTaskDto(task));
+    }
+
+    @PutMapping("{id}")
+    @Transactional
+    public ResponseEntity<DetalhesTaskDto> atualizar(@PathVariable("id") Long id,
+                                                     @RequestBody CadastroTaskDto dto){
+        var task = taskRepository.getReferenceById(id);
+        task.atualizarDados(dto);
+        return ResponseEntity.ok(new DetalhesTaskDto(task));
+    }
+
+    @DeleteMapping("{id}")
+    @Transactional
+    public ResponseEntity<Void> deletar(@PathVariable("id") Long id){
+        taskRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
