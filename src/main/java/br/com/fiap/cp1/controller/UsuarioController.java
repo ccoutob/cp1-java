@@ -4,6 +4,12 @@ import br.com.fiap.cp1.dto.usuario.CadastroUsuarioDto;
 import br.com.fiap.cp1.dto.usuario.DetalhesUsuarioDto;
 import br.com.fiap.cp1.model.user.Usuario;
 import br.com.fiap.cp1.repository.UsuarioRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("auth")
+@Tag(name = "Usuario", description = "Realiza ações de CRUD do Usuario")
 public class UsuarioController {
 
     @Autowired
@@ -27,6 +34,13 @@ public class UsuarioController {
 
     @PostMapping("register")
     @Transactional
+    @Operation(summary = "Cadastra um Usuario", description = "Cadastra o Usuario em nossa aplicação")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Usuario cadastrado com sucesso",
+                    content = @Content(schema = @Schema(implementation = DetalhesUsuarioDto.class), mediaType = "application/json")),
+            @ApiResponse(responseCode = "404", description = "Id do usuario não encontrado", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Usuário não autenticado",content = @Content)
+    })
     public ResponseEntity<DetalhesUsuarioDto> post(@RequestBody @Valid CadastroUsuarioDto dto,
                                                    UriComponentsBuilder builder){
         var usuario = new Usuario(dto.username(), passwordEncoder.encode(dto.password()), dto.email());
