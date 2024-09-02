@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "62a7bdd8-1414-4fb7-ba68-3ee9f078b6ea",
+		"name": "CP1 - Java",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29974256"
+	},
+	"item": [
+		{
+			"name": "Gerar Token com Usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"teste\",\r\n    \"password\": \"123\",\r\n    \"email\": \"teste@oi\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar Usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"oi\",\r\n    \"password\": 111,\r\n    \"email\": \"teste@oiiiii\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar Status das Tasks",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tipoStatus\": \"Possíveis status para as Tasks: Pendente, Em Andamento, Aguardando Cliente, Concluída\"\r\n}\r\n\r\n//Utilizado apenas uma vez para registrar no sistema e usuário poder identificar os Status",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/public/registrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"public",
+						"registrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Status das Tasks",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGSUFQIiwic3ViIjoidGVzdGUiLCJleHAiOjE3MjUyNDM3ODh9.fJmJE7myLf7_IzzhdpEVR0SJYo5NxSsdxHytI1gs1lY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tasks/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Todas as Tasks",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGSUFQIiwic3ViIjoidGVzdGUiLCJleHAiOjE3MjUyNDM3ODh9.fJmJE7myLf7_IzzhdpEVR0SJYo5NxSsdxHytI1gs1lY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Task Específica",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGSUFQIiwic3ViIjoidGVzdGUiLCJleHAiOjE3MjUyNDM3ODh9.fJmJE7myLf7_IzzhdpEVR0SJYo5NxSsdxHytI1gs1lY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tasks/id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGSUFQIiwic3ViIjoidGVzdGUiLCJleHAiOjE3MjUyNDM3ODh9.fJmJE7myLf7_IzzhdpEVR0SJYo5NxSsdxHytI1gs1lY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titulo\": \"Incidente com a Ordem44\",\r\n    \"descricao\": \"Cliente errou o processo de saída de uma ordem de envio\",\r\n    \"dataConclusaoPrevista\": \"18:00:00\",\r\n    \"status\": \"Pendente\" //O Status inicial deve sempre ser \"Pendente, respeite o processo do sistema\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGSUFQIiwic3ViIjoidGVzdGUiLCJleHAiOjE3MjUyNDM3ODh9.fJmJE7myLf7_IzzhdpEVR0SJYo5NxSsdxHytI1gs1lY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titulo\": \"Incidente com a Ordem88\",\r\n    \"descricao\": \"Cliente errou o processo de saída de uma ordem de envio\",\r\n    \"dataConclusaoPrevista\": \"18:00:00\",\r\n    \"status\": \"Pendente\" //O Status inicial deve sempre ser \"Pendente, respeite o processo do sistema\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tasks/952",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks",
+						"952"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGSUFQIiwic3ViIjoidGVzdGUiLCJleHAiOjE3MjUyNDM3ODh9.fJmJE7myLf7_IzzhdpEVR0SJYo5NxSsdxHytI1gs1lY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tasks/102",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks",
+						"102"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
