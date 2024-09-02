@@ -23,7 +23,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("auth")
-@Tag(name = "Usuario", description = "Realiza ações de CRUD do Usuario")
 public class UsuarioController {
 
     @Autowired
@@ -34,13 +33,6 @@ public class UsuarioController {
 
     @PostMapping("register")
     @Transactional
-    @Operation(summary = "Cadastra um Usuario", description = "Cadastra o Usuario em nossa aplicação")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Usuario cadastrado com sucesso",
-                    content = @Content(schema = @Schema(implementation = DetalhesUsuarioDto.class), mediaType = "application/json")),
-            @ApiResponse(responseCode = "404", description = "Id do usuario não encontrado", content = @Content),
-            @ApiResponse(responseCode = "403", description = "Usuário não autenticado",content = @Content)
-    })
     public ResponseEntity<DetalhesUsuarioDto> post(@RequestBody @Valid CadastroUsuarioDto dto,
                                                    UriComponentsBuilder builder){
         var usuario = new Usuario(dto.username(), passwordEncoder.encode(dto.password()), dto.email());

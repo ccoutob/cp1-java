@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("login")
 public class AutenticacaoController {
 
     @Autowired
@@ -32,11 +32,6 @@ public class AutenticacaoController {
 
     @PostMapping
     @Operation(summary = "Realiza o Login de um Usuario", description = "Realiza o Login de um Usuario que retornará um JWT para utilizarmos")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso",
-                    content = @Content(schema = @Schema(implementation = DadosLoginDto.class), mediaType = "application/json")),
-            @ApiResponse(responseCode = "403", description = "Login não autenticado",content = @Content)
-    })
     public ResponseEntity<TokenJwtDto> post(@RequestBody @Valid DadosLoginDto dto){
         var autenticacaoToken = new UsernamePasswordAuthenticationToken(dto.login(), dto.password());
         var authenticate = authenticationManager.authenticate(autenticacaoToken);
